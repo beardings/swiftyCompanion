@@ -10,8 +10,6 @@
 
 @interface UserProfileViewController : UIViewController
 
-@property (nonatomic, strong) NSDictionary *json;
-
 + (UserProfileViewController *)initWithJson:(NSDictionary *)json;
 
 @end

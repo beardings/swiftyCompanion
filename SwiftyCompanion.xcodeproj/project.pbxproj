@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		230572E82087C51500D45AA0 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 230572E62087C51500D45AA0 /* CustomTableViewCell.m */; };
+		230572E92087C51500D45AA0 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 230572E72087C51500D45AA0 /* CustomTableViewCell.xib */; };
 		231BA306208523C500CD2556 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 231BA304208523C500CD2556 /* UserProfileViewController.m */; };
 		231BA307208523C500CD2556 /* UserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 231BA305208523C500CD2556 /* UserProfileViewController.xib */; };
 		236F18552082250100491328 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 236F18542082250100491328 /* AppDelegate.m */; };
@@ -18,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		230572E52087C51500D45AA0 /* CustomTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
+		230572E62087C51500D45AA0 /* CustomTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
+		230572E72087C51500D45AA0 /* CustomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
 		231BA303208523C500CD2556 /* UserProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
 		231BA304208523C500CD2556 /* UserProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
 		231BA305208523C500CD2556 /* UserProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileViewController.xib; sourceTree = "<group>"; };
@@ -47,6 +52,9 @@
 		231BA3082085339D00CD2556 /* Custom TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				230572E52087C51500D45AA0 /* CustomTableViewCell.h */,
+				230572E62087C51500D45AA0 /* CustomTableViewCell.m */,
+				230572E72087C51500D45AA0 /* CustomTableViewCell.xib */,
 			);
 			name = "Custom TableViewCell";
 			sourceTree = "<group>";
@@ -164,6 +172,7 @@
 				236F18602082250100491328 /* LaunchScreen.storyboard in Resources */,
 				231BA307208523C500CD2556 /* UserProfileViewController.xib in Resources */,
 				236F18722082820300491328 /* Assets.xcassets in Resources */,
+				230572E92087C51500D45AA0 /* CustomTableViewCell.xib in Resources */,
 				236F185B2082250100491328 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -178,6 +187,7 @@
 				236F18582082250100491328 /* FindViewController.m in Sources */,
 				231BA306208523C500CD2556 /* UserProfileViewController.m in Sources */,
 				236F18632082250100491328 /* main.m in Sources */,
+				230572E82087C51500D45AA0 /* CustomTableViewCell.m in Sources */,
 				236F18552082250100491328 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
