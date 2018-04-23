@@ -23,6 +23,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *errorLbl;
 @property (weak, nonatomic) IBOutlet UIImageView *mainImage;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
+
+@property (nonatomic) CGRect oldFrame;
+
 @end
 
 @implementation FindViewController
@@ -40,6 +44,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController.navigationBar setHidden:YES];
+    [self.indicator setHidden:YES];
+    self.indicator.hidesWhenStopped = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
@@ -64,17 +70,53 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
+    NSDictionary *info = [notification userInfo];
+    CGRect keyboardFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
+    self.oldFrame = self.view.frame;
+    
+    CGFloat yErrorLbl =  self.view.frame.size.height -  self.errorLbl.frame.origin.y;
+    
+    CGFloat newY;
+    
+    //FIXME: need no tune for different screen
+    
+    if (yErrorLbl > keyboardFrame.size.height)
+        newY = yErrorLbl - keyboardFrame.size.height;
+    else
+        newY = keyboardFrame.size.height - yErrorLbl;
+    
+    CGRect frame = CGRectMake(0, 0, self.oldFrame.size.width, self.view.frame.size.height - newY - 50);
+    
+    [UIView animateWithDuration:3.0 animations:^{
+        
+        
+        self.view.frame = frame;
+        
+    }];
+
 }
 
 - (void)keyboardWillHide
 {
-    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        self.view.frame = self.oldFrame;
+        
+    }];
+
 }
 
 - (void)dismissKeyboard
 {
     [self.view endEditing:YES];
+}
+
+#pragma mark - TextField Delegate
+
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self setErrorText:@""];
 }
 
 #pragma mark - API Method
@@ -90,7 +132,6 @@
     [request setURL:[NSURL URLWithString:stringURL]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    //[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 
     [request setHTTPBody:postData];
     
@@ -99,7 +140,14 @@
                             completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                                 
                                 if (error)
+                                {
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [self.indicator stopAnimating];
+                                        [self setErrorText:[NSString stringWithFormat:@"%@", [error localizedDescription]]];
+                                    });
+                                    
                                     return ;
+                                }
                                 
                                 dispatch_async(dispatch_get_main_queue(), ^{
                                     
@@ -110,11 +158,16 @@
                                     if (!jsonError && json)
                                     {
                                         _token = json[@"access_token"];
+                                        
                                         NSLog(@"%@", _token);
+                                        
                                         if (_textField.text.length != 0)
                                             [self getUserData:@"https://api.intra.42.fr/v2/users" loginUser:self.textField.text];
                                         else
-                                            NSLog(@"Please, enter login.");
+                                        {
+                                            [self.indicator stopAnimating];
+                                            [self setErrorText:@"Please, enter login"];
+                                        }
                                     }
                                     
                                 });
@@ -137,7 +190,11 @@
                                         
                                         if (error)
                                         {
-                                            NSLog(@"error in getUserData");
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                [self.indicator stopAnimating];
+                                                [self setErrorText:[NSString stringWithFormat:@"%@", [error localizedDescription]]];
+                                            });
+                                            
                                             return ;
                                         }
                                         
@@ -156,6 +213,9 @@
                                                     
                                                     UserProfileViewController *userProfile = [UserProfileViewController initWithJson:json];
                                                     
+                                                    [self.indicator stopAnimating];
+                                                    [self dismissKeyboard];
+                                                    
                                                     [self.navigationController pushViewController:userProfile animated:YES];
                                         
                                                     
@@ -164,7 +224,8 @@
                                             }
                                             else
                                             {
-                                                NSLog(@"Please enter a valid email");
+                                                [self.indicator stopAnimating];
+                                                [self setErrorText:@"Please enter a valid email"];
                                             }
                                             
                                         });
@@ -177,15 +238,54 @@
 
 - (IBAction)searchPressed:(id)sender
 {
-    if (_token)
+    if (self.indicator.animating == NO)
     {
-         if (_textField.text.length != 0)
-             [self getUserData:@"https://api.intra.42.fr/v2/users" loginUser:self.textField.text];
+         [self setErrorText:@""];
+        
+        if (_token)
+        {
+            if (_textField.text.length != 0)
+            {
+                [self.indicator setHidden:NO];
+                [self.indicator startAnimating];
+                [self getUserData:@"https://api.intra.42.fr/v2/users" loginUser:self.textField.text];
+            }
+            else
+                [self setErrorText:@"Please, enter login"];
+                
+        }
         else
-            NSLog(@"HELLO!!");
+        {
+            [self.indicator setHidden:NO];
+            [self.indicator startAnimating];
+            [self getResultWithSrringURL:@"https://api.intra.42.fr/oauth/token"];
+        }
     }
-    else
-        [self getResultWithSrringURL:@"https://api.intra.42.fr/oauth/token"];
     
+}
+
+#pragma mark - Action method
+
+- (void)setErrorText:(NSString *)text
+{
+     self.errorLbl.text = text;
+}
+
+- (void)showPopUp:(NSString *)text
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:text preferredStyle:UIAlertControllerStyleAlert];
+    
+//    UIColor *color = [UIColor redColor];
+//    NSString *string = text;
+//    NSDictionary *attrs = @{ NSForegroundColorAttributeName : color };
+//    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:string attributes:attrs];
+//
+//    [alertController setValue:attrStr  forKey:@"attributedMessage"];
+    
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+    
+    [alertController addAction:ok];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 @end
