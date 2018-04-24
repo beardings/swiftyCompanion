@@ -67,7 +67,7 @@
 
 - (void) viewDidDisappear:(BOOL)animated
 {
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,7 +95,8 @@
         
         kOFFSET_FOR_KEYBOARD = yOffset - diff;
         
-        if (kOFFSET_FOR_KEYBOARD < 0) kOFFSET_FOR_KEYBOARD = 0;
+        if (kOFFSET_FOR_KEYBOARD < 0) 
+            kOFFSET_FOR_KEYBOARD = 0;
     }
     
     if (self.view.frame.origin.y >= 0)
@@ -239,6 +240,8 @@
                                                 
                                                 dispatch_async(dispatch_get_main_queue(), ^{
                                                     
+                                                    [self dismissKeyboard];
+                                                    
                                                     UserProfileViewController *userProfile = [UserProfileViewController initWithJson:json];
                                                     
                                                     [self.indicator stopAnimating];
@@ -291,28 +294,11 @@
     
 }
 
-#pragma mark - Action method
+#pragma mark - Action methods
 
 - (void)setErrorText:(NSString *)text
 {
      self.errorLbl.text = text;
 }
 
-- (void)showPopUp:(NSString *)text
-{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:text preferredStyle:UIAlertControllerStyleAlert];
-    
-//    UIColor *color = [UIColor redColor];
-//    NSString *string = text;
-//    NSDictionary *attrs = @{ NSForegroundColorAttributeName : color };
-//    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:string attributes:attrs];
-//
-//    [alertController setValue:attrStr  forKey:@"attributedMessage"];
-    
-    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
-    
-    [alertController addAction:ok];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-}
 @end
