@@ -234,7 +234,7 @@
                                                                                                  options:NSJSONReadingMutableContainers
                                                                                                    error:&jsonError];
                                             
-                                            if (json)
+                                            if (json.count > 0 && !jsonError)
                                             {
                                                 _json = json;
                                                 
