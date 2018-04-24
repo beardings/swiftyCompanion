@@ -25,14 +25,23 @@
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
 
-@property (nonatomic) CGRect oldFrame;
+@property (nonatomic, assign) BOOL isKeyboard;
 
 @end
 
 @implementation FindViewController
+{
+    CGRect _originalViewFrame;
+    NSInteger kOFFSET_FOR_KEYBOARD;
+    CGFloat keyboardHeight;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    kOFFSET_FOR_KEYBOARD = 0;
+    keyboardHeight = 0;
+    _originalViewFrame = self.view.frame;
     
     self.appUID = @"cb0a4b2cf538142a0248fb6fcc260f5a61678d9fabcf7c3be15a25c8f29c834f";
     self.secKey = @"611af97543ad0d533c5de46af81b752390a57a3944d2c96fc4967c17812d70c0";
@@ -70,41 +79,60 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    NSDictionary *info = [notification userInfo];
-    CGRect keyboardFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    self.isKeyboard = YES;
     
-    self.oldFrame = self.view.frame;
-    
-    CGFloat yErrorLbl =  self.view.frame.size.height -  self.errorLbl.frame.origin.y;
-    
-    CGFloat newY;
-    
-    //FIXME: need no tune for different screen
-    
-    if (yErrorLbl > keyboardFrame.size.height)
-        newY = yErrorLbl - keyboardFrame.size.height;
-    else
-        newY = keyboardFrame.size.height - yErrorLbl;
-    
-    CGRect frame = CGRectMake(0, 0, self.oldFrame.size.width, self.view.frame.size.height - newY - 50);
-    
-    [UIView animateWithDuration:3.0 animations:^{
+    if (notification)
+    {
+        NSDictionary *info = [notification userInfo];
         
+        CGRect rect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
         
-        self.view.frame = frame;
+        CGSize screenSize = [[UIScreen mainScreen] bounds].size;
         
-    }];
+        CGFloat yOffset = CGRectGetMaxY(self.errorLbl.frame);
+        
+        CGFloat diff = screenSize.height - CGRectGetHeight(rect);
+        
+        kOFFSET_FOR_KEYBOARD = yOffset - diff;
+        
+        if (kOFFSET_FOR_KEYBOARD < 0) kOFFSET_FOR_KEYBOARD = 0;
+    }
+    
+    if (self.view.frame.origin.y >= 0)
+        [self setViewMovedUp:YES];
+    
+    else if (self.view.frame.origin.y < 0)
+        [self setViewMovedUp:NO];
 
 }
 
 - (void)keyboardWillHide
 {
-    [UIView animateWithDuration:0.3 animations:^{
-        
-        self.view.frame = self.oldFrame;
-        
-    }];
+    self.isKeyboard = NO;
+    
+    if (self.view.frame.origin.y >= 0)
+        [self setViewMovedUp:YES];
+    
+    else if (self.view.frame.origin.y < 0)
+        [self setViewMovedUp:NO];
+}
 
+- (void)setViewMovedUp:(BOOL)movedUp
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.34f];
+        
+    CGRect rect = self.view.frame;
+    if (movedUp)
+        rect.origin.y -= (kOFFSET_FOR_KEYBOARD + 30);
+
+    else
+        rect.origin.y += (kOFFSET_FOR_KEYBOARD + 30);
+        
+    self.view.frame = rect;
+        
+    [UIView commitAnimations];
 }
 
 - (void)dismissKeyboard
@@ -205,7 +233,7 @@
                                                                                                  options:NSJSONReadingMutableContainers
                                                                                                    error:&jsonError];
                                             
-                                            if (!jsonError && json.count != 0)
+                                            if (json)
                                             {
                                                 _json = json;
                                                 
@@ -214,7 +242,6 @@
                                                     UserProfileViewController *userProfile = [UserProfileViewController initWithJson:json];
                                                     
                                                     [self.indicator stopAnimating];
-                                                    [self dismissKeyboard];
                                                     
                                                     [self.navigationController pushViewController:userProfile animated:YES];
                                         
@@ -240,7 +267,7 @@
 {
     if (self.indicator.animating == NO)
     {
-         [self setErrorText:@""];
+        [self setErrorText:@""];
         
         if (_token)
         {
