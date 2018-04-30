@@ -13,6 +13,10 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UILabel *fullNameLbl;
+
+@property (weak, nonatomic) IBOutlet UIView *placeholderLvlView;
+@property (weak, nonatomic) IBOutlet UIView *lvlView;
 
 @property (nonatomic) NSArray *titleArr;
 
@@ -49,6 +53,22 @@
     _titleArr = [NSArray arrayWithObjects:@"Skills", @"Projects", nil];
     
     [self tuneImageView];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _placeholderLvlView.layer.cornerRadius = 4.f;
+        _lvlView.layer.cornerRadius = 4.f;
+    });
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    CGRect frame = CGRectMake(0, 0, 54, 8);
+    
+    [UIView animateWithDuration:0.6 animations:^{
+        _lvlView.frame = frame;
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -109,11 +129,19 @@
     
     cell.titleLabel.text =_titleArr[indexPath.row];
     
-    UIView *view = [UIView new];
-    view.backgroundColor = [UIColor clearColor];
-    cell.selectedBackgroundView = view;
+    cell.selectionStyle = UITableViewCellAccessoryNone;
 
     return cell;
+}
+
+#pragma mark - Properties
+
+- (void)setFullNameLbl:(UILabel *)fullNameLbl
+{
+    if (!_fullNameLbl)
+        _fullNameLbl = fullNameLbl;
+    
+    self.fullNameLbl.text = _json[@"displayname"];
 }
 
 - (void)setImageView:(UIImageView *)imageView
@@ -123,6 +151,19 @@
     
     NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:_json[@"image_url"]]];
     self.imageView.image = [UIImage imageWithData: imageData];
+}
+
+- (void) setPlaceholderLvlVIew:(UIView *)placeholderLvlView
+{
+    if (!_placeholderLvlView)
+        _placeholderLvlView = placeholderLvlView;
+    
+}
+
+- (void)setLvlView:(UIView *)lvlView
+{
+    if (!_lvlView)
+        _lvlView = lvlView;
 }
 
 //[0]    (null)    @"patroning" : @"0 elements"
