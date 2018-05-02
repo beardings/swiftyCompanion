@@ -52,6 +52,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self.navigationController.navigationBar setHidden:YES];
     [self.indicator setHidden:YES];
     self.indicator.hidesWhenStopped = YES;
