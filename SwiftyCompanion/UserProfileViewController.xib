@@ -9,10 +9,19 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Bold</string>
+            <string>HelveticaNeue-Medium</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserProfileViewController">
             <connections>
+                <outlet property="fullNameLbl" destination="C7P-8d-38O" id="Vup-c7-Gbh"/>
                 <outlet property="imageView" destination="Ee3-P1-Vxh" id="v12-Ba-NR5"/>
+                <outlet property="lvlView" destination="QDi-lu-CDN" id="fGs-5E-XOs"/>
+                <outlet property="placeholderLvlView" destination="IZb-MT-y1a" id="Wkr-dY-Jv5"/>
                 <outlet property="tableView" destination="dGO-Cp-mj6" id="Am5-RB-Z7R"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -40,14 +49,52 @@
                                     <constraint firstAttribute="width" constant="120" id="mcx-RQ-LCg"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C7P-8d-38O">
+                                <rect key="frame" x="15" y="143" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZb-MT-y1a">
+                                <rect key="frame" x="15" y="227" width="345" height="8"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDi-lu-CDN">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="8"/>
+                                        <color key="backgroundColor" red="0.9882352941176471" green="0.72156862745098038" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" id="VIj-pS-REL"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="QDi-lu-CDN" secondAttribute="bottom" id="Bec-qP-CLN"/>
+                                    <constraint firstItem="QDi-lu-CDN" firstAttribute="top" secondItem="IZb-MT-y1a" secondAttribute="top" id="VN3-tK-fW4"/>
+                                    <constraint firstAttribute="height" constant="8" id="h5b-Tl-4mo"/>
+                                    <constraint firstItem="QDi-lu-CDN" firstAttribute="leading" secondItem="IZb-MT-y1a" secondAttribute="leading" id="wpS-L5-tYH"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level : 14 - 72%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kuL-ID-60z">
+                                <rect key="frame" x="131.5" y="201" width="112" height="18"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="C7P-8d-38O" firstAttribute="leading" secondItem="alf-fB-h9w" secondAttribute="leading" constant="15" id="8fA-LZ-z0D"/>
                             <constraint firstAttribute="bottom" secondItem="Oix-W2-JnM" secondAttribute="bottom" id="CUd-sk-Ozu"/>
+                            <constraint firstItem="C7P-8d-38O" firstAttribute="top" secondItem="Ee3-P1-Vxh" secondAttribute="bottom" constant="8" id="FXX-xo-dIs"/>
+                            <constraint firstItem="IZb-MT-y1a" firstAttribute="leading" secondItem="alf-fB-h9w" secondAttribute="leading" constant="15" id="Nct-B6-wIH"/>
                             <constraint firstItem="Oix-W2-JnM" firstAttribute="leading" secondItem="alf-fB-h9w" secondAttribute="leading" id="Q9O-Qx-0Hj"/>
+                            <constraint firstItem="kuL-ID-60z" firstAttribute="centerX" secondItem="alf-fB-h9w" secondAttribute="centerX" id="Qc7-3f-k0K"/>
                             <constraint firstItem="Oix-W2-JnM" firstAttribute="top" secondItem="alf-fB-h9w" secondAttribute="top" id="TjQ-ym-CQl"/>
                             <constraint firstAttribute="trailing" secondItem="Oix-W2-JnM" secondAttribute="trailing" id="VQa-87-w7c"/>
                             <constraint firstItem="Ee3-P1-Vxh" firstAttribute="top" secondItem="alf-fB-h9w" secondAttribute="top" constant="15" id="Vdd-vB-Jdm"/>
                             <constraint firstItem="Ee3-P1-Vxh" firstAttribute="leading" secondItem="alf-fB-h9w" secondAttribute="leading" constant="15" id="Vwk-9D-fxJ"/>
+                            <constraint firstItem="IZb-MT-y1a" firstAttribute="top" secondItem="kuL-ID-60z" secondAttribute="bottom" constant="8" id="ZfS-Hb-jxI"/>
+                            <constraint firstAttribute="bottom" secondItem="IZb-MT-y1a" secondAttribute="bottom" constant="15" id="qQL-RC-I0M"/>
+                            <constraint firstAttribute="trailing" secondItem="IZb-MT-y1a" secondAttribute="trailing" constant="15" id="wN8-cc-Xw7"/>
                         </constraints>
                     </view>
                     <view key="tableFooterView" contentMode="scaleToFill" id="R0i-Rs-Gjm" userLabel="Footer View">
