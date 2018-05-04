@@ -11,9 +11,14 @@
 
 @interface UserProfileViewController () <UITableViewDelegate, UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UIView *hederPlaceholder;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
 @property (weak, nonatomic) IBOutlet UILabel *fullNameLbl;
+@property (weak, nonatomic) IBOutlet UILabel *lvlLbl;
+@property (weak, nonatomic) IBOutlet UILabel *loginLbl;
 
 @property (weak, nonatomic) IBOutlet UIView *placeholderLvlView;
 @property (weak, nonatomic) IBOutlet UIView *lvlView;
@@ -21,6 +26,8 @@
 @property (nonatomic) NSArray *titleArr;
 
 @property (nonatomic, strong) NSDictionary *json;
+@property (nonatomic, strong) NSDictionary *skills;
+@property (nonatomic) NSString *lvlStr;
 
 @end
 
@@ -57,14 +64,20 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         _placeholderLvlView.layer.cornerRadius = 4.f;
         _lvlView.layer.cornerRadius = 4.f;
+        _hederPlaceholder.layer.cornerRadius = 4.f;
     });
+    
+    [self setSkillsAndLvlStr];
+    [self setLvlLbl];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    CGRect frame = CGRectMake(0, 0, 54, 8);
+    
+    
+    CGRect frame = CGRectMake(0, 0, [self newWidthRow:_lvlStr], 8);
     
     [UIView animateWithDuration:0.6 animations:^{
         _lvlView.frame = frame;
@@ -101,6 +114,18 @@
 
 }
 
+- (CGFloat)newWidthRow:(NSString *)string
+{
+    
+    NSArray *dataArr = [string componentsSeparatedByString:@"."];
+    
+    NSString *digit = [NSString stringWithFormat:@"0.%@",[[dataArr objectAtIndex:1] substringToIndex:2]];
+    
+    CGFloat newWidth = self.placeholderLvlView.frame.size.width * [digit doubleValue];
+    
+    return newWidth;
+}
+
 #pragma mark - TableView DataSourse, Delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -135,6 +160,34 @@
 }
 
 #pragma mark - Properties
+
+- (void)setLoginLbl:(UILabel *)loginLbl
+{
+    if (!_loginLbl)
+        _loginLbl = loginLbl;
+    
+    _loginLbl.text =  _json[@"login"];
+}
+
+- (void)setLvlLbl
+{
+    
+    NSArray *dataArr = [_lvlStr componentsSeparatedByString:@"."];
+    
+    NSString *secondPart = [[dataArr objectAtIndex:1] substringToIndex:2];
+    
+    _lvlLbl.text = [NSString stringWithFormat:@"Level : %@ - %@%%", [dataArr objectAtIndex:0], secondPart];
+}
+
+
+- (void)setSkillsAndLvlStr
+{
+    NSArray *dataArr = _json[@"cursus_users"];
+    
+    _skills = [dataArr firstObject][@"skills"];
+    
+    _lvlStr = [NSString stringWithFormat:@"%f", [[dataArr firstObject][@"level"] doubleValue]];
+}
 
 - (void)setFullNameLbl:(UILabel *)fullNameLbl
 {
