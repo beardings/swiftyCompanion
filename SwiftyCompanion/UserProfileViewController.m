@@ -217,6 +217,8 @@
 {
     if (!_lvlView)
         _lvlView = lvlView;
+    
+    //_lvlView.backgroundColor = [UIColor color];
 }
 
 //[0]    (null)    @"patroning" : @"0 elements"

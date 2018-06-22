@@ -210,7 +210,6 @@
 - (void)getUserData:(NSString *)stringURL loginUser:(NSString *)login
 {
     NSString *get = [NSString stringWithFormat:@"%@/%@?access_token=%@", stringURL, login, _token];
-
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:get]];
@@ -245,12 +244,11 @@
                                                     [self dismissKeyboard];
                                                     
                                                     UserProfileViewController *userProfile = [UserProfileViewController initWithJson:json];
-                                                    
+
                                                     [self.indicator stopAnimating];
-                                                    
+
                                                     [self.navigationController pushViewController:userProfile animated:YES];
                                         
-                                                    
                                                 });
 
                                             }
