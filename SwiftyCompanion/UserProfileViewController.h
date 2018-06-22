@@ -10,6 +10,6 @@
 
 @interface UserProfileViewController : UIViewController
 
-+ (UserProfileViewController *)initWithJson:(NSDictionary *)json;
++ (UserProfileViewController *)initWithJson:(NSDictionary *)json coalition:(NSDictionary *)coalitionData;
 
 @end

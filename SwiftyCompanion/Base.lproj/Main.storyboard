@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="obl-AQ-xAH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="obl-AQ-xAH">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-            <string>HelveticaNeue-Medium</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="huL-ML-2sT">
@@ -114,6 +108,7 @@
                         <outlet property="errorLbl" destination="5pI-T6-5KN" id="Vme-gA-4P7"/>
                         <outlet property="indicator" destination="zYj-PQ-yDD" id="nNO-4g-eY6"/>
                         <outlet property="mainImage" destination="8e7-KJ-BNm" id="JpJ-Jn-pGa"/>
+                        <outlet property="searchBtn" destination="uSL-C3-FDX" id="2jQ-gC-o11"/>
                         <outlet property="stackView" destination="cvb-W7-Y2L" id="MAn-8C-4bd"/>
                         <outlet property="textField" destination="qBg-5O-Mri" id="jMW-j1-bMf"/>
                     </connections>

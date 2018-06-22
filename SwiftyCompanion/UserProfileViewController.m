@@ -11,6 +11,8 @@
 
 @interface UserProfileViewController () <UITableViewDelegate, UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UIImageView *headerBgImageView;
+
 @property (weak, nonatomic) IBOutlet UIView *hederPlaceholder;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,6 +28,7 @@
 @property (nonatomic) NSArray *titleArr;
 
 @property (nonatomic, strong) NSDictionary *json;
+@property (nonatomic, strong) NSDictionary *coalitionData;
 @property (nonatomic, strong) NSDictionary *skills;
 @property (nonatomic) NSString *lvlStr;
 
@@ -33,12 +36,15 @@
 
 @implementation UserProfileViewController
 
-+ (UserProfileViewController *)initWithJson:(NSDictionary *)json
++ (UserProfileViewController *)initWithJson:(NSDictionary *)json coalition:(NSDictionary *)coalitionData
 {
     UserProfileViewController *controller = [UserProfileViewController new];
     
     if (controller)
+    {
         [controller setJson:json];
+        [controller setCoalitionData:coalitionData];
+    }
         
     return controller;
 }
@@ -75,8 +81,6 @@
 {
     [super viewDidAppear:animated];
     
-    
-    
     CGRect frame = CGRectMake(0, 0, [self newWidthRow:_lvlStr], 8);
     
     [UIView animateWithDuration:0.6 animations:^{
@@ -102,9 +106,51 @@
 
 #pragma mark - Custom method
 
+- (BOOL)isValid:(id<NSObject>)obj {
+    if (obj != nil && ![obj isKindOfClass:[NSNull class]])
+        return YES;
+    else
+        return NO;
+}
+
+- (UIColor *)colorWithHexString:(NSString*)hex
+{
+    NSString *cString = [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    
+    // String should be 6 or 8 characters
+    if ([cString length] < 6) return [UIColor grayColor];
+    
+    // strip 0X if it appears
+    if ([cString hasPrefix:@"0X"]) cString = [cString substringFromIndex:2];
+    
+    if ([cString length] != 6) return  [UIColor grayColor];
+    
+    // Separate into r, g, b substrings
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    NSString *rString = [cString substringWithRange:range];
+    
+    range.location = 2;
+    NSString *gString = [cString substringWithRange:range];
+    
+    range.location = 4;
+    NSString *bString = [cString substringWithRange:range];
+    
+    // Scan values
+    unsigned int r, g, b;
+    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    
+    return [UIColor colorWithRed:((float) r / 255.0f)
+                           green:((float) g / 255.0f)
+                            blue:((float) b / 255.0f)
+                           alpha:1.0f];
+}
+
 - (void)tuneImageView
 {
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         self.imageView.layer.cornerRadius = self.imageView.frame.size.height / 2;
         self.imageView.layer.borderWidth = 3;
@@ -161,16 +207,38 @@
 
 #pragma mark - Properties
 
+- (void)setHeaderBgImageView:(UIImageView *)headerBgImageView
+{
+    _headerBgImageView = headerBgImageView;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"name"][0]])
+    {
+        NSString *name = [_coalitionData valueForKey:@"name"][0];
+        
+        if ([name isEqualToString:@"The Union"])
+            _headerBgImageView.image = [UIImage imageNamed:@"the_union_new"];
+        else if ([name isEqualToString:@"The Hive"])
+            _headerBgImageView.image = [UIImage imageNamed:@"the_hive_new"];
+        else if ([name isEqualToString:@"The Empire"])
+            _headerBgImageView.image = [UIImage imageNamed:@"the_empire_new"];
+        else if ([name isEqualToString:@"The Alliance"])
+            _headerBgImageView.image = [UIImage imageNamed:@"the_alliance_new"];
+    }
+}
+
 - (void)setLoginLbl:(UILabel *)loginLbl
 {
     if (!_loginLbl)
         _loginLbl = loginLbl;
     
-    _loginLbl.text =  _json[@"login"];
+    if (_json && [self isValid:[_json valueForKey:@"login"]])
+        _loginLbl.text =  _json[@"login"];
 }
 
 - (void)setLvlLbl
 {
+    if (!_lvlStr)
+        return;
     
     NSArray *dataArr = [_lvlStr componentsSeparatedByString:@"."];
     
@@ -184,9 +252,11 @@
 {
     NSArray *dataArr = _json[@"cursus_users"];
     
-    _skills = [dataArr firstObject][@"skills"];
+    if (dataArr && [self isValid:[[dataArr firstObject] valueForKey:@"skills"]])
+          _skills = [dataArr firstObject][@"skills"];
     
-    _lvlStr = [NSString stringWithFormat:@"%f", [[dataArr firstObject][@"level"] doubleValue]];
+    if (dataArr && [self isValid:[[dataArr firstObject] valueForKey:@"level"]])
+        _lvlStr = [NSString stringWithFormat:@"%f", [[dataArr firstObject][@"level"] doubleValue]];
 }
 
 - (void)setFullNameLbl:(UILabel *)fullNameLbl
@@ -194,7 +264,8 @@
     if (!_fullNameLbl)
         _fullNameLbl = fullNameLbl;
     
-    self.fullNameLbl.text = _json[@"displayname"];
+    if (_json && [self isValid:[_json valueForKey:@"displayname"]])
+        self.fullNameLbl.text = _json[@"displayname"];
 }
 
 - (void)setImageView:(UIImageView *)imageView
@@ -218,7 +289,11 @@
     if (!_lvlView)
         _lvlView = lvlView;
     
-    //_lvlView.backgroundColor = [UIColor color];
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
+    {
+        NSString *color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        _lvlView.backgroundColor = [self colorWithHexString:color];
+    }
 }
 
 //[0]    (null)    @"patroning" : @"0 elements"
@@ -250,4 +325,13 @@
 //[26]    (null)    @"campus_users" : @"1 element"
 //[27]    (null)    @"image_url" : @"https://cdn.intra.42.fr/users/mponomar.jpg"
 
+//{
+//    color = "#673ab7";
+//    id = 6;
+//    "image_url" = "https://cdn.intra.42.fr/coalition/image/6/Union_vec.svg";
+//    name = "The Union";
+//    score = 391;
+//    slug = "the-union";
+//    "user_id" = 21763;
+//}
 @end

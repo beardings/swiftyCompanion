@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSDictionary *json;
 
 - (IBAction)searchPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *searchBtn;
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIStackView *stackView;
@@ -152,7 +153,7 @@
 
 #pragma mark - API Method
 
-- (void)getResultWithSrringURL:(NSString *)stringURL
+- (void)getTokenWithSrringURL:(NSString *)stringURL
 {
     NSString *post = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@&client_secret=%@",_appUID,_secKey];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -239,17 +240,7 @@
                                             {
                                                 _json = json;
                                                 
-                                                dispatch_async(dispatch_get_main_queue(), ^{
-                                                    
-                                                    [self dismissKeyboard];
-                                                    
-                                                    UserProfileViewController *userProfile = [UserProfileViewController initWithJson:json];
-
-                                                    [self.indicator stopAnimating];
-
-                                                    [self.navigationController pushViewController:userProfile animated:YES];
-                                        
-                                                });
+                                                [self getUserCoalitionData:stringURL loginUser:login];
 
                                             }
                                             else
@@ -262,6 +253,37 @@
                                     }];
     
      [task resume];
+}
+
+- (void)getUserCoalitionData:(NSString *)stringURL loginUser:(NSString *)login
+{
+    NSString *get = [NSString stringWithFormat:@"%@/%@/coalitions/?access_token=%@", stringURL, login, _token];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:get]];
+    
+    NSURLSessionDataTask *task =
+    [[NSURLSession sharedSession] dataTaskWithRequest:request
+                                    completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                        
+                                        NSError *jsonError;
+                                        NSDictionary *userCoalitionJson = [NSJSONSerialization JSONObjectWithData:data
+                                                                                             options:NSJSONReadingMutableContainers
+                                                                                               error:&jsonError];
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            
+                                            [self dismissKeyboard];
+                                            
+                                            UserProfileViewController *userProfile = [UserProfileViewController initWithJson:_json coalition:userCoalitionJson];
+                                            
+                                            [self.indicator stopAnimating];
+                                            
+                                            [self.navigationController pushViewController:userProfile animated:YES];
+                                            
+                                        });
+                                        
+                                    }];
+         [task resume];
 }
 
 #pragma mark - Actions
@@ -288,7 +310,7 @@
         {
             [self.indicator setHidden:NO];
             [self.indicator startAnimating];
-            [self getResultWithSrringURL:@"https://api.intra.42.fr/oauth/token"];
+            [self getTokenWithSrringURL:@"https://api.intra.42.fr/oauth/token"];
         }
     }
     

@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserProfileViewController">
             <connections>
                 <outlet property="fullNameLbl" destination="C7P-8d-38O" id="Vup-c7-Gbh"/>
+                <outlet property="headerBgImageView" destination="Oix-W2-JnM" id="Aba-Pj-v8w"/>
                 <outlet property="hederPlaceholder" destination="WaL-ro-J10" id="DkY-k7-Whv"/>
                 <outlet property="imageView" destination="Ee3-P1-Vxh" id="v12-Ba-NR5"/>
                 <outlet property="loginLbl" destination="RCN-Jq-sHu" id="gMP-OI-hVv"/>
@@ -35,14 +36,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_user" translatesAutoresizingMaskIntoConstraints="NO" id="Oix-W2-JnM">
+                            <imageView userInteractionEnabled="NO" contentMode="bottomLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="standart_bg_new" translatesAutoresizingMaskIntoConstraints="NO" id="Oix-W2-JnM">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="HTb-aF-mvk">
                                 <rect key="frame" x="150" y="15" width="210" height="171"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C7P-8d-38O">
-                                        <rect key="frame" x="0.0" y="0.0" width="210" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C7P-8d-38O">
+                                        <rect key="frame" x="0.0" y="0.0" width="81.5" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="9Ma-HU-l9p"/>
                                         </constraints>
@@ -66,7 +67,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDi-lu-CDN">
                                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="8"/>
-                                        <color key="backgroundColor" red="0.9882352941176471" green="0.72156862745098038" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.0024609598331153393" green="0.72769784927368164" blue="0.73860031366348267" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" id="VIj-pS-REL"/>
                                         </constraints>
@@ -80,8 +81,8 @@
                                     <constraint firstItem="QDi-lu-CDN" firstAttribute="leading" secondItem="IZb-MT-y1a" secondAttribute="leading" id="wpS-L5-tYH"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level : 14 - 72%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kuL-ID-60z">
-                                <rect key="frame" x="131.5" y="201" width="112" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level : 0 - 0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kuL-ID-60z">
+                                <rect key="frame" x="140" y="201" width="95.5" height="18"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -94,8 +95,8 @@
                                     <constraint firstAttribute="width" constant="120" id="mcx-RQ-LCg"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCN-Jq-sHu">
-                                <rect key="frame" x="15" y="143" width="120" height="0.0"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCN-Jq-sHu">
+                                <rect key="frame" x="15" y="143" width="120" height="18"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -140,6 +141,6 @@
         </view>
     </objects>
     <resources>
-        <image name="bg_user" width="3000" height="2000"/>
+        <image name="standart_bg_new" width="1500" height="975"/>
     </resources>
 </document>
