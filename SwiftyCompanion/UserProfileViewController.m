@@ -13,17 +13,36 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *headerBgImageView;
 
+
+@property (weak, nonatomic) IBOutlet UILabel *fullNameLbl;
 @property (weak, nonatomic) IBOutlet UIView *hederPlaceholder;
+@property (weak, nonatomic) IBOutlet UILabel *loginTitleLbl;
+@property (weak, nonatomic) IBOutlet UILabel *walletTitleLbl;
+@property (weak, nonatomic) IBOutlet UILabel *phoneTitleLbl;
+@property (weak, nonatomic) IBOutlet UILabel *emailTitleLbl;
+@property (weak, nonatomic) IBOutlet UILabel *locationTitleLbl;
+@property (weak, nonatomic) IBOutlet UILabel *correctionTitleLbl;
+
+@property (weak, nonatomic) IBOutlet UILabel *loginLbl;
+@property (weak, nonatomic) IBOutlet UILabel *walletLbl;
+@property (weak, nonatomic) IBOutlet UILabel *phoneLbl;
+@property (weak, nonatomic) IBOutlet UILabel *emailLbl;
+@property (weak, nonatomic) IBOutlet UILabel *locationLbl;
+@property (weak, nonatomic) IBOutlet UILabel *correctionLbl;
+
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
-@property (weak, nonatomic) IBOutlet UILabel *fullNameLbl;
-@property (weak, nonatomic) IBOutlet UILabel *lvlLbl;
-@property (weak, nonatomic) IBOutlet UILabel *loginLbl;
+
+@property (weak, nonatomic) IBOutlet UILabel *coalitionNameLbl;
+@property (weak, nonatomic) IBOutlet UIImageView *coalitionBgImage;
+@property (weak, nonatomic) IBOutlet UIImageView *coalitionImageView;
+
 
 @property (weak, nonatomic) IBOutlet UIView *placeholderLvlView;
 @property (weak, nonatomic) IBOutlet UIView *lvlView;
+@property (weak, nonatomic) IBOutlet UILabel *lvlLbl;
 
 @property (nonatomic) NSArray *titleArr;
 
@@ -226,15 +245,6 @@
     }
 }
 
-- (void)setLoginLbl:(UILabel *)loginLbl
-{
-    if (!_loginLbl)
-        _loginLbl = loginLbl;
-    
-    if (_json && [self isValid:[_json valueForKey:@"login"]])
-        _loginLbl.text =  _json[@"login"];
-}
-
 - (void)setLvlLbl
 {
     if (!_lvlStr)
@@ -263,6 +273,10 @@
 {
     if (!_fullNameLbl)
         _fullNameLbl = fullNameLbl;
+    
+    _fullNameLbl.numberOfLines = 1;
+    _fullNameLbl.minimumScaleFactor = 0.5;
+    _fullNameLbl.adjustsFontSizeToFitWidth = YES;
     
     if (_json && [self isValid:[_json valueForKey:@"displayname"]])
         self.fullNameLbl.text = _json[@"displayname"];
@@ -296,6 +310,198 @@
     }
 }
 
+- (void)setCoalitionBgImage:(UIImageView *)coalitionBgImage
+{
+    if (!_coalitionBgImage)
+        _coalitionBgImage = coalitionBgImage;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
+    {
+        [_coalitionBgImage setHidden:NO];
+        NSString *color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        [self tintImageView:_coalitionBgImage withColor:[self colorWithHexString:color]];
+    }
+}
+
+- (UIImageView *) tintImageView: (UIImageView *)imageView withColor: (UIColor*) color{
+    imageView.image = [imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [imageView setTintColor:color];
+    return imageView;
+}
+
+- (void)setCoalitionNameLbl:(UILabel *)coalitionNameLbl
+{
+    if(!_coalitionNameLbl)
+        _coalitionNameLbl = coalitionNameLbl;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"name"][0]])
+    {
+        [_coalitionNameLbl setHidden:NO];
+        _coalitionNameLbl.text = [_coalitionData valueForKey:@"name"][0];
+    }
+}
+
+- (void)setCoalitionImageView:(UIImageView *)coalitionImageView
+{
+    if (!_coalitionImageView)
+        _coalitionImageView = coalitionImageView;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"image_url"][0]])
+    {
+        
+        NSString *url = [_coalitionData valueForKey:@"image_url"][0];
+        NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:url]];
+        _coalitionImageView.image = [UIImage imageWithData: imageData];
+    }
+}
+
+#pragma mark - Headers titles properties
+
+- (void)setLoginTitleLbl:(UILabel *)loginTitleLbl {
+    
+    if (!_loginTitleLbl)
+        _loginTitleLbl = loginTitleLbl;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
+    {
+        [_coalitionBgImage setHidden:NO];
+        NSString *color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        _loginTitleLbl.textColor = [self colorWithHexString:color];
+    }
+}
+
+- (void)setWalletTitleLbl:(UILabel *)walletTitleLbl
+{
+    if (!_walletTitleLbl)
+        _walletTitleLbl = walletTitleLbl;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
+    {
+        [_coalitionBgImage setHidden:NO];
+        NSString *color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        _walletTitleLbl.textColor = [self colorWithHexString:color];
+    }
+}
+
+- (void)setPhoneTitleLbl:(UILabel *)phoneTitleLbl
+{
+    if (!_phoneTitleLbl)
+        _phoneTitleLbl = phoneTitleLbl;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
+    {
+        [_coalitionBgImage setHidden:NO];
+        NSString *color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        _phoneTitleLbl.textColor = [self colorWithHexString:color];
+    }
+}
+
+- (void)setEmailTitleLbl:(UILabel *)emailTitleLbl
+{
+    if (!_emailTitleLbl)
+        _emailTitleLbl = emailTitleLbl;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
+    {
+        [_coalitionBgImage setHidden:NO];
+        NSString *color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        _emailTitleLbl.textColor = [self colorWithHexString:color];
+    }
+}
+
+- (void)setLocationTitleLbl:(UILabel *)locationTitleLbl
+{
+    
+    if (!_locationTitleLbl)
+        _locationTitleLbl = locationTitleLbl;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
+    {
+        [_coalitionBgImage setHidden:NO];
+        NSString *color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        _locationTitleLbl.textColor = [self colorWithHexString:color];
+    }
+}
+
+- (void)setCorrectionTitleLbl:(UILabel *)correctionTitleLbl
+{
+    
+    if (!_correctionTitleLbl)
+        _correctionTitleLbl = correctionTitleLbl;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
+    {
+        [_coalitionBgImage setHidden:NO];
+        NSString *color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        _correctionTitleLbl.textColor = [self colorWithHexString:color];
+    }
+}
+
+- (void)setLoginLbl:(UILabel *)loginLbl
+{
+    if (!_loginLbl)
+        _loginLbl = loginLbl;
+    
+    if (_json && [self isValid:[_json valueForKey:@"login"]])
+        _loginLbl.text =  _json[@"login"];
+}
+
+- (void)setWalletLbl:(UILabel *)walletLbl
+{
+    if (!_walletLbl)
+        _walletLbl = walletLbl;
+    
+    if (_json && [self isValid:[_json valueForKey:@"wallet"]])
+        _walletLbl.text = [NSString stringWithFormat:@"%lu₳", [_json[@"wallet"] longValue]];
+}
+
+- (void)setPhoneLbl:(UILabel *)phoneLbl
+{
+    if (!_phoneLbl)
+        _phoneLbl = phoneLbl;
+    
+    _phoneLbl.numberOfLines = 1;
+    _phoneLbl.minimumScaleFactor = 0.5;
+    _phoneLbl.adjustsFontSizeToFitWidth = YES;
+    
+    if (_json && [self isValid:[_json valueForKey:@"phone"]])
+        _phoneLbl.text =  _json[@"phone"];
+}
+
+- (void)setEmailLbl:(UILabel *)emailLbl
+{
+    if (!_emailLbl)
+        _emailLbl = emailLbl;
+    
+    _emailLbl.numberOfLines = 1;
+    _emailLbl.minimumScaleFactor = 0.5;
+    _emailLbl.adjustsFontSizeToFitWidth = YES;
+    
+    if (_json && [self isValid:[_json valueForKey:@"email"]])
+        _emailLbl.text =  _json[@"email"];
+}
+
+- (void)setLocationLbl:(UILabel *)locationLbl
+{
+    if (!_locationLbl)
+        _locationLbl = locationLbl;
+    
+    if (_json && [self isValid:[_json valueForKey:@"location"]])
+        _locationLbl.text =  _json[@"location"];
+}
+
+- (void)setCorrectionLbl:(UILabel *)correctionLbl
+{
+    if (!_correctionLbl)
+        _correctionLbl = correctionLbl;
+    
+    if (_json && [self isValid:[_json valueForKey:@"correction_point"]])
+    {
+        NSString *correction = [NSString stringWithFormat:@"%lu", [_json[@"correction_point"] longValue]];
+        _correctionLbl.text =  correction;
+    }
+}
+
 //[0]    (null)    @"patroning" : @"0 elements"
 //[1]    (null)    @"location" : @"e1r9p12"
 //[2]    (null)    @"url" : @"https://api.intra.42.fr/v2/users/mponomar"
@@ -325,13 +531,4 @@
 //[26]    (null)    @"campus_users" : @"1 element"
 //[27]    (null)    @"image_url" : @"https://cdn.intra.42.fr/users/mponomar.jpg"
 
-//{
-//    color = "#673ab7";
-//    id = 6;
-//    "image_url" = "https://cdn.intra.42.fr/coalition/image/6/Union_vec.svg";
-//    name = "The Union";
-//    score = 391;
-//    slug = "the-union";
-//    "user_id" = 21763;
-//}
 @end
