@@ -82,7 +82,10 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    self.isKeyboard = YES;
+    if (!_isKeyboard || _isKeyboard == NO)
+        self.isKeyboard = YES;
+    else return ;
+    
     
     if (notification)
     {

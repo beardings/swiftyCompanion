@@ -260,7 +260,10 @@
 
 - (void)setSkillsAndLvlStr
 {
-    NSArray *dataArr = _json[@"cursus_users"];
+    NSArray *dataArr;
+    
+    if ([self isValid:[_json valueForKey:@"cursus_users"]])
+        dataArr = _json[@"cursus_users"];
     
     if (dataArr && [self isValid:[[dataArr firstObject] valueForKey:@"skills"]])
           _skills = [dataArr firstObject][@"skills"];
@@ -310,19 +313,6 @@
     }
 }
 
-- (void)setCoalitionBgImage:(UIImageView *)coalitionBgImage
-{
-    if (!_coalitionBgImage)
-        _coalitionBgImage = coalitionBgImage;
-    
-    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
-    {
-        [_coalitionBgImage setHidden:NO];
-        NSString *color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
-        [self tintImageView:_coalitionBgImage withColor:[self colorWithHexString:color]];
-    }
-}
-
 - (UIImageView *) tintImageView: (UIImageView *)imageView withColor: (UIColor*) color{
     imageView.image = [imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [imageView setTintColor:color];
@@ -346,12 +336,31 @@
     if (!_coalitionImageView)
         _coalitionImageView = coalitionImageView;
     
-    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"image_url"][0]])
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"name"][0]])
     {
+        NSString *name = [_coalitionData valueForKey:@"name"][0];
         
-        NSString *url = [_coalitionData valueForKey:@"image_url"][0];
-        NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:url]];
-        _coalitionImageView.image = [UIImage imageWithData: imageData];
+        if ([name isEqualToString:@"The Union"])
+            _coalitionImageView.image = [UIImage imageNamed:@"logoUnion"];
+        else if ([name isEqualToString:@"The Hive"])
+            _coalitionImageView.image = [UIImage imageNamed:@"logoHive"];
+        else if ([name isEqualToString:@"The Empire"])
+            _coalitionImageView.image = [UIImage imageNamed:@"logoEmpire"];
+        else if ([name isEqualToString:@"The Alliance"])
+            _coalitionImageView.image = [UIImage imageNamed:@"logoAlliance"];
+    }
+}
+
+- (void)setCoalitionBgImage:(UIImageView *)coalitionBgImage
+{
+    if (!_coalitionBgImage)
+        _coalitionBgImage = coalitionBgImage;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
+    {
+        [_coalitionBgImage setHidden:NO];
+        NSString *color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        [self tintImageView:_coalitionBgImage withColor:[self colorWithHexString:color]];
     }
 }
 
