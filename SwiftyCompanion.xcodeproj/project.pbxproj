@@ -17,6 +17,8 @@
 		236F18602082250100491328 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 236F185E2082250100491328 /* LaunchScreen.storyboard */; };
 		236F18632082250100491328 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 236F18622082250100491328 /* main.m */; };
 		236F18722082820300491328 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 236F18712082820300491328 /* Assets.xcassets */; };
+		23D1116120E7C5E5007348CF /* SkillsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D1115F20E7C5E5007348CF /* SkillsTableViewCell.m */; };
+		23D1116220E7C5E5007348CF /* SkillsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23D1116020E7C5E5007348CF /* SkillsTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,9 @@
 		236F18612082250100491328 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		236F18622082250100491328 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		236F18712082820300491328 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		23D1115E20E7C5E5007348CF /* SkillsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkillsTableViewCell.h; sourceTree = "<group>"; };
+		23D1115F20E7C5E5007348CF /* SkillsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SkillsTableViewCell.m; sourceTree = "<group>"; };
+		23D1116020E7C5E5007348CF /* SkillsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkillsTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +57,7 @@
 		231BA3082085339D00CD2556 /* Custom TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				23D1115D20E7C5C0007348CF /* SkillsTableVIewCell */,
 				230572E52087C51500D45AA0 /* CustomTableViewCell.h */,
 				230572E62087C51500D45AA0 /* CustomTableViewCell.m */,
 				230572E72087C51500D45AA0 /* CustomTableViewCell.xib */,
@@ -109,6 +115,16 @@
 				231BA305208523C500CD2556 /* UserProfileViewController.xib */,
 			);
 			name = "Main Controllers";
+			sourceTree = "<group>";
+		};
+		23D1115D20E7C5C0007348CF /* SkillsTableVIewCell */ = {
+			isa = PBXGroup;
+			children = (
+				23D1115E20E7C5E5007348CF /* SkillsTableViewCell.h */,
+				23D1115F20E7C5E5007348CF /* SkillsTableViewCell.m */,
+				23D1116020E7C5E5007348CF /* SkillsTableViewCell.xib */,
+			);
+			name = SkillsTableVIewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,6 +188,7 @@
 				236F18602082250100491328 /* LaunchScreen.storyboard in Resources */,
 				231BA307208523C500CD2556 /* UserProfileViewController.xib in Resources */,
 				236F18722082820300491328 /* Assets.xcassets in Resources */,
+				23D1116220E7C5E5007348CF /* SkillsTableViewCell.xib in Resources */,
 				230572E92087C51500D45AA0 /* CustomTableViewCell.xib in Resources */,
 				236F185B2082250100491328 /* Main.storyboard in Resources */,
 			);
@@ -185,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				236F18582082250100491328 /* FindViewController.m in Sources */,
+				23D1116120E7C5E5007348CF /* SkillsTableViewCell.m in Sources */,
 				231BA306208523C500CD2556 /* UserProfileViewController.m in Sources */,
 				236F18632082250100491328 /* main.m in Sources */,
 				230572E82087C51500D45AA0 /* CustomTableViewCell.m in Sources */,

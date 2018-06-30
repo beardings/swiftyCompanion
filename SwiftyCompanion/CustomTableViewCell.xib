@@ -33,12 +33,22 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fu6-lw-hLj">
                         <rect key="frame" x="21" y="54" width="333" height="180"/>
-                        <color key="backgroundColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AGq-NO-OZC">
+                                <rect key="frame" x="0.0" y="0.0" width="333" height="180"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="AGq-NO-OZC" secondAttribute="bottom" id="DLe-Fj-HK5"/>
+                            <constraint firstItem="AGq-NO-OZC" firstAttribute="leading" secondItem="Fu6-lw-hLj" secondAttribute="leading" id="DhF-hY-oxk"/>
+                            <constraint firstItem="AGq-NO-OZC" firstAttribute="top" secondItem="Fu6-lw-hLj" secondAttribute="top" id="jer-Xv-ARa"/>
                             <constraint firstAttribute="height" constant="180" id="mkd-cw-tsl"/>
+                            <constraint firstAttribute="trailing" secondItem="AGq-NO-OZC" secondAttribute="trailing" id="x9d-VR-sTi"/>
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="Fu6-lw-hLj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="0m0-pZ-RQV"/>
                     <constraint firstItem="GjA-rI-dEy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="J2I-e2-DYd"/>
@@ -49,9 +59,11 @@
                     <constraint firstAttribute="trailingMargin" secondItem="GjA-rI-dEy" secondAttribute="trailing" constant="5" id="mj8-G0-zJ0"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.98038297891616821" green="0.98038595914840698" blue="0.98039251565933228" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="conteinerView" destination="Fu6-lw-hLj" id="igX-fA-j1k"/>
+                <outlet property="tableVIew" destination="AGq-NO-OZC" id="9Mw-0V-gXc"/>
                 <outlet property="titleLabel" destination="GjA-rI-dEy" id="GES-iU-7ht"/>
             </connections>
             <point key="canvasLocation" x="23.5" y="115"/>

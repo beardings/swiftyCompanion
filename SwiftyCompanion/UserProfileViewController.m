@@ -48,7 +48,8 @@
 
 @property (nonatomic, strong) NSDictionary *json;
 @property (nonatomic, strong) NSDictionary *coalitionData;
-@property (nonatomic, strong) NSDictionary *skills;
+@property (nonatomic, strong) NSArray *skills;
+
 @property (nonatomic) NSString *lvlStr;
 
 @end
@@ -81,6 +82,8 @@
     self.tableView.dataSource = self;
     
     self.tableView.separatorColor = [UIColor clearColor];
+    
+    self.tableView.backgroundColor = [self colorWithHexString:@"FAFAFA"];
     
     _titleArr = [NSArray arrayWithObjects:@"Skills", @"Projects", nil];
     
@@ -220,7 +223,13 @@
     cell.titleLabel.text =_titleArr[indexPath.row];
     
     cell.selectionStyle = UITableViewCellAccessoryNone;
-
+    
+    [cell setSkills:_skills];
+    cell.indexPath = indexPath;
+    
+    if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
+        cell.color = [[_coalitionData valueForKey:@"color"][0] stringByReplacingOccurrencesOfString:@"#" withString:@""];
+    
     return cell;
 }
 
@@ -510,34 +519,5 @@
         _correctionLbl.text =  correction;
     }
 }
-
-//[0]    (null)    @"patroning" : @"0 elements"
-//[1]    (null)    @"location" : @"e1r9p12"
-//[2]    (null)    @"url" : @"https://api.intra.42.fr/v2/users/mponomar"
-//[3]    (null)    @"expertises_users" : @"0 elements"
-//[4]    (null)    @"pool_year" : @"2016"
-//[5]    (null)    @"last_name" : @"Ponomarov"
-//[6]    (null)    @"displayname" : @"Mykola Ponomarov"
-//[7]    (null)    @"staff?" : (no summary)
-//[8]    (null)    @"correction_point" : (long)2
-//[9]    (null)    @"cursus_users" : @"2 elements"
-//[10]    (null)    @"achievements" : @"16 elements"
-//[11]    (null)    @"partnerships" : @"0 elements"
-//[12]    (null)    @"id" : (long)22452
-//[13]    (null)    @"projects_users" : @"82 elements"
-//[14]    (null)    @"email" : @"mponomar@student.unit.ua"
-//[15]    (null)    @"groups" : @"0 elements"
-//[16]    (null)    @"phone" : @"+380636408293"
-//[17]    (null)    @"login" : @"mponomar"
-//[18]    (null)    @"pool_month" : @"september"
-//[19]    (null)    @"titles" : @"1 element"
-//[20]    (null)    @"titles_users" : @"1 element"
-//[21]    (null)    @"patroned" : @"0 elements"
-//[22]    (null)    @"campus" : @"1 element"
-//[23]    (null)    @"languages_users" : @"2 elements"
-//[24]    (null)    @"wallet" : (long)55
-//[25]    (null)    @"first_name" : @"Mykola"
-//[26]    (null)    @"campus_users" : @"1 element"
-//[27]    (null)    @"image_url" : @"https://cdn.intra.42.fr/users/mponomar.jpg"
 
 @end
