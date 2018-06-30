@@ -341,7 +341,7 @@
             <constraints>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="dGO-Cp-mj6" secondAttribute="trailing" id="39N-kC-aLm"/>
                 <constraint firstItem="dGO-Cp-mj6" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="S6x-iK-4ro"/>
-                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="dGO-Cp-mj6" secondAttribute="bottom" id="mo5-SE-tSJ"/>
+                <constraint firstAttribute="bottom" secondItem="dGO-Cp-mj6" secondAttribute="bottom" id="iyR-0m-uOp"/>
                 <constraint firstItem="dGO-Cp-mj6" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="r9y-T8-5lK"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>

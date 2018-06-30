@@ -84,7 +84,7 @@
     
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        _tableVIew.separatorColor = [self colorWithHexString:@"FAFAFA"];
+        _tableVIew.separatorColor = [self colorWithHexString:@"F0F0F0"];
     });
 }
 
