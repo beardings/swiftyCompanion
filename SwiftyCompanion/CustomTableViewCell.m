@@ -35,6 +35,13 @@
 
 #pragma mark - Custom methods
 
+- (BOOL)isValid:(id<NSObject>)obj {
+    if (obj != nil && ![obj isKindOfClass:[NSNull class]])
+        return YES;
+    else
+        return NO;
+}
+
 - (UIColor *)colorWithHexString:(NSString*)hex
 {
     NSString *cString = [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
@@ -165,7 +172,29 @@
         }
         
         cellTwo.selectionStyle = UITableViewCellAccessoryNone;
+        cellTwo.statusLbl.layer.cornerRadius = 4.f;
+        cellTwo.statusLbl.layer.masksToBounds = YES;
+
+        if ([self isValid:[_projects[indexPath.row] valueForKey:@"project"]] && [self isValid:[_projects[indexPath.row][@"project"] valueForKey:@"name"]])
+            cellTwo.titleLbl.text = [_projects[indexPath.row][@"project"] valueForKey:@"name"];
         
+        if ([self isValid:[_projects[indexPath.row] valueForKey:@"validated?"]])
+        {
+            long long val = [_projects[indexPath.row][@"validated?"] longLongValue];
+            long long score = [_projects[indexPath.row][@"final_mark"] longLongValue];
+            
+            if (val == 1)
+            {
+                cellTwo.statusLbl.backgroundColor = [self colorWithHexString:@"74B666"];
+                cellTwo.statusLbl.text = [NSString stringWithFormat:@"success - %llu/100", score];
+            }
+            else
+            {
+                cellTwo.statusLbl.backgroundColor = [self colorWithHexString:@"CA6A71"];
+                cellTwo.statusLbl.text = [NSString stringWithFormat:@"fail - %llu/100", score];
+            }
+        }
+
     }
     
     return cellOne != nil ? cellOne : cellTwo;

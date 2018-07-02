@@ -11,5 +11,6 @@
 @interface ProjectsTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLbl;
+@property (weak, nonatomic) IBOutlet UILabel *statusLbl;
 
 @end
