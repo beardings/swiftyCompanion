@@ -12,10 +12,9 @@
 
 @property (nonatomic, strong) NSString *color;
 @property (weak, nonatomic) IBOutlet UILabel *titleLbl;
+@property (nonatomic, strong) NSString *lvlStr;
 
-- (void)setLvlStr:(NSString *)lvlStr;
 - (void)setTitleSkill;
-
 - (void)animateShowLvlView;
 - (void)hideLvlView;
 

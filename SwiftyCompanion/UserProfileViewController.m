@@ -49,6 +49,7 @@
 @property (nonatomic, strong) NSDictionary *json;
 @property (nonatomic, strong) NSDictionary *coalitionData;
 @property (nonatomic, strong) NSArray *skills;
+@property (nonatomic, strong) NSArray *projects;
 
 @property (nonatomic) NSString *lvlStr;
 
@@ -127,6 +128,19 @@
 }
 
 #pragma mark - Custom method
+
+- (void)parsProjects:(NSArray *)projects
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < projects.count; i++)
+    {
+        if (![projects[i][@"final_mark"] isEqual:[NSNull null]])
+            [array addObject:projects[i]];
+    }
+    
+    _projects = array;
+}
 
 - (BOOL)isValid:(id<NSObject>)obj {
     if (obj != nil && ![obj isKindOfClass:[NSNull class]])
@@ -225,6 +239,7 @@
     cell.selectionStyle = UITableViewCellAccessoryNone;
     
     [cell setSkills:_skills];
+    [cell setProjects:_projects];
     cell.indexPath = indexPath;
     
     if (_coalitionData && _coalitionData.count > 0 && [self isValid:[_coalitionData valueForKey:@"color"][0]])
@@ -270,6 +285,7 @@
 - (void)setSkillsAndLvlStr
 {
     NSArray *dataArr;
+    NSArray *projects;
     
     if ([self isValid:[_json valueForKey:@"cursus_users"]])
         dataArr = _json[@"cursus_users"];
@@ -279,6 +295,12 @@
     
     if (dataArr && [self isValid:[[dataArr firstObject] valueForKey:@"level"]])
         _lvlStr = [NSString stringWithFormat:@"%f", [[dataArr firstObject][@"level"] doubleValue]];
+    
+    if ([self isValid:[_json valueForKey:@"projects_users"]])
+        projects = _json[@"projects_users"];
+    
+    [self parsProjects:projects];
+    
 }
 
 - (void)setFullNameLbl:(UILabel *)fullNameLbl

@@ -12,9 +12,10 @@
 
 @property (weak, nonatomic) IBOutlet UIView *conteinerView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-- (void)setSkills:(NSArray *)skills;
 
-@property (nonatomic, strong) NSDictionary *projects;
+- (void)setSkills:(NSArray *)skills;
+- (void)setProjects:(NSArray *)projects;
+
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, strong) NSString *color;
 

@@ -12,7 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *placeholderLvlView;
 @property (weak, nonatomic) IBOutlet UIView *lvlVIew;
-@property (nonatomic, strong) NSString *lvlStr;
 
 @end
 
@@ -20,7 +19,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-
     
 }
 
@@ -109,12 +107,6 @@
 
 #pragma mark - Properties
 
-- (void)setLvlStr:(NSString *)lvlStr
-{
-    if (!_lvlStr)
-        _lvlStr = lvlStr;
-}
-
 - (void)setTitleLbl:(UILabel *)titleLbl
 {
     if (!_titleLbl)
@@ -139,7 +131,8 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         _lvlVIew.layer.cornerRadius = 3.5f;
-        _lvlVIew.backgroundColor = [self colorWithHexString:_color];
+        if (_color)
+            _lvlVIew.backgroundColor = [self colorWithHexString:_color];
     });
 }
 

@@ -11,6 +11,8 @@
 		230572E92087C51500D45AA0 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 230572E72087C51500D45AA0 /* CustomTableViewCell.xib */; };
 		231BA306208523C500CD2556 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 231BA304208523C500CD2556 /* UserProfileViewController.m */; };
 		231BA307208523C500CD2556 /* UserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 231BA305208523C500CD2556 /* UserProfileViewController.xib */; };
+		2326EEA320EA747B00571084 /* ProjectsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2326EEA120EA747B00571084 /* ProjectsTableViewCell.m */; };
+		2326EEA420EA747B00571084 /* ProjectsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2326EEA220EA747B00571084 /* ProjectsTableViewCell.xib */; };
 		236F18552082250100491328 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 236F18542082250100491328 /* AppDelegate.m */; };
 		236F18582082250100491328 /* FindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 236F18572082250100491328 /* FindViewController.m */; };
 		236F185B2082250100491328 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 236F18592082250100491328 /* Main.storyboard */; };
@@ -28,6 +30,9 @@
 		231BA303208523C500CD2556 /* UserProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
 		231BA304208523C500CD2556 /* UserProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
 		231BA305208523C500CD2556 /* UserProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileViewController.xib; sourceTree = "<group>"; };
+		2326EEA020EA747B00571084 /* ProjectsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectsTableViewCell.h; sourceTree = "<group>"; };
+		2326EEA120EA747B00571084 /* ProjectsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectsTableViewCell.m; sourceTree = "<group>"; };
+		2326EEA220EA747B00571084 /* ProjectsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectsTableViewCell.xib; sourceTree = "<group>"; };
 		236F18502082250100491328 /* SwiftyCompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyCompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		236F18532082250100491328 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		236F18542082250100491328 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -57,12 +62,23 @@
 		231BA3082085339D00CD2556 /* Custom TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				2326EE9F20EA743F00571084 /* ProjectsTableViewCell */,
 				23D1115D20E7C5C0007348CF /* SkillsTableVIewCell */,
 				230572E52087C51500D45AA0 /* CustomTableViewCell.h */,
 				230572E62087C51500D45AA0 /* CustomTableViewCell.m */,
 				230572E72087C51500D45AA0 /* CustomTableViewCell.xib */,
 			);
 			name = "Custom TableViewCell";
+			sourceTree = "<group>";
+		};
+		2326EE9F20EA743F00571084 /* ProjectsTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				2326EEA020EA747B00571084 /* ProjectsTableViewCell.h */,
+				2326EEA120EA747B00571084 /* ProjectsTableViewCell.m */,
+				2326EEA220EA747B00571084 /* ProjectsTableViewCell.xib */,
+			);
+			name = ProjectsTableViewCell;
 			sourceTree = "<group>";
 		};
 		236F18472082250100491328 = {
@@ -189,6 +205,7 @@
 				231BA307208523C500CD2556 /* UserProfileViewController.xib in Resources */,
 				236F18722082820300491328 /* Assets.xcassets in Resources */,
 				23D1116220E7C5E5007348CF /* SkillsTableViewCell.xib in Resources */,
+				2326EEA420EA747B00571084 /* ProjectsTableViewCell.xib in Resources */,
 				230572E92087C51500D45AA0 /* CustomTableViewCell.xib in Resources */,
 				236F185B2082250100491328 /* Main.storyboard in Resources */,
 			);
@@ -206,6 +223,7 @@
 				231BA306208523C500CD2556 /* UserProfileViewController.m in Sources */,
 				236F18632082250100491328 /* main.m in Sources */,
 				230572E82087C51500D45AA0 /* CustomTableViewCell.m in Sources */,
+				2326EEA320EA747B00571084 /* ProjectsTableViewCell.m in Sources */,
 				236F18552082250100491328 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,7 +359,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = A7A6C24PU5;
 				INFOPLIST_FILE = SwiftyCompanion/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mponomar.SwiftyCompanion;
@@ -355,7 +373,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = A7A6C24PU5;
 				INFOPLIST_FILE = SwiftyCompanion/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mponomar.SwiftyCompanion;

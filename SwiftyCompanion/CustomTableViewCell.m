@@ -8,14 +8,14 @@
 
 #import "CustomTableViewCell.h"
 #import "SkillsTableViewCell.h"
+#import "ProjectsTableViewCell.h"
 
 @interface CustomTableViewCell () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 
 @property (nonatomic, strong) NSArray *skills;
-
-@property (nonatomic, strong) NSMutableArray *projectsArray;
+@property (nonatomic, strong) NSArray *projects;
 
 @end
 
@@ -95,6 +95,12 @@
    
 }
 
+- (void)setProjects:(NSArray *)projects
+{
+    if (!_projects)
+        _projects = projects;
+}
+
 #pragma mark - TableView DataSourse, Delegate
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -118,7 +124,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _indexPath.row == 0 ? _skills.count : _projectsArray.count;
+    return _indexPath.row == 0 ? _skills.count : _projects.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -128,20 +134,41 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SkillsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SkillsCell"];
-    if (!cell)
-    {
-        [tableView registerNib:[UINib nibWithNibName:@"SkillsTableViewCell" bundle:nil] forCellReuseIdentifier:@"SkillsCell"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"SkillsCell"];
-    }
-
-    cell.selectionStyle = UITableViewCellAccessoryNone;
-    cell.color = _color;
-    cell.titleLbl.text = _skills[indexPath.row][@"name"];
-    [cell setLvlStr:[NSString stringWithFormat:@"%f", [_skills[indexPath.row][@"level"] doubleValue]]];
-    [cell setTitleSkill];
     
-    return cell;
+    SkillsTableViewCell *cellOne = nil;
+    ProjectsTableViewCell *cellTwo = nil;
+    
+    if (_indexPath.row == 0)
+    {
+        cellOne = [tableView dequeueReusableCellWithIdentifier:@"SkillsCell"];
+        
+        if (!cellOne)
+        {
+            [tableView registerNib:[UINib nibWithNibName:@"SkillsTableViewCell" bundle:nil] forCellReuseIdentifier:@"SkillsCell"];
+            cellOne = [tableView dequeueReusableCellWithIdentifier:@"SkillsCell"];
+        }
+        
+        cellOne.selectionStyle = UITableViewCellAccessoryNone;
+        cellOne.color = _color;
+        cellOne.titleLbl.text = _skills[indexPath.row][@"name"];
+        cellOne.lvlStr = [NSString stringWithFormat:@"%f", [_skills[indexPath.row][@"level"] doubleValue]];
+        [cellOne setTitleSkill];
+    }
+    else
+    {
+        cellTwo = [tableView dequeueReusableCellWithIdentifier:@"ProjectsCell"];
+        
+        if (!cellTwo)
+        {
+            [tableView registerNib:[UINib nibWithNibName:@"ProjectsTableViewCell" bundle:nil] forCellReuseIdentifier:@"ProjectsCell"];
+            cellTwo = [tableView dequeueReusableCellWithIdentifier:@"ProjectsCell"];
+        }
+        
+        cellTwo.selectionStyle = UITableViewCellAccessoryNone;
+        
+    }
+    
+    return cellOne != nil ? cellOne : cellTwo;
 }
 
 @end
